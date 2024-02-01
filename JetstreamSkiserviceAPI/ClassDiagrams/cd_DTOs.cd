@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="JetstreamSkiserviceAPI.DTO.AuthDto">
+    <Position X="1.25" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\AuthDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JetstreamSkiserviceAPI.DTO.EmployeeDto">
+    <Position X="3.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAECAAA=</HashCode>
+      <FileName>DTO\EmployeeDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JetstreamSkiserviceAPI.DTO.RegistrationDto">
+    <Position X="5.5" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAEASAAAIAEAAAAAAAAQAAAQAAAAAAAIAAACAg=</HashCode>
+      <FileName>DTO\RegistrationDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JetstreamSkiserviceAPI.DTO.StatusDto">
+    <Position X="1.5" Y="3" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>DTO\StatusDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JetstreamSkiserviceAPI.DTO.PriorityDto">
+    <Position X="6.5" Y="1" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAEAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>DTO\PriorityDto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

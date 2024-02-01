@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/logo.png" />
+    <title>Admin-Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-50">
+    <div class="flex flex-col items-center justify-center w-full h-[90vh]">
+      <div
+        class="w-full p-8 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-w-8xl"
+      >
+        <div class="flex justify-between mb-4">
+          <button
+            id="allOrdersBtn"
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Alle Bestellungen anzeigen
+          </button>
+          <button
+            id="openOrdersBtn"
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Offene Bestellungen
+          </button>
+          <button
+            id="inWorkOrdersBtn"
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            In Arbeit Bestellungen
+          </button>
+          <button
+            id="doneOrdersBtn"
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            abgeschlossene Bestellungen
+          </button>
+          <button
+            id="tiefOrdersBtn"
+            type="button"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Sortieren nach: Tief
+          </button>
+          <button
+            id="standardOrdersBtn"
+            type="button"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Sortieren nach: Standard
+          </button>
+          <button
+            id="expressOrdersBtn"
+            type="button"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Sortieren nach: Express
+          </button>
+        </div>
+        <div
+          id="output"
+          class="w-full overflow-auto border-2 border-gray-300 rounded-lg h-[80vh]"
+        >
+          <p>Noch keine Informationen erhalten von der Datenbank</p>
+        </div>
+      </div>
+    </div>
+    <div id="successModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+      <div
+        class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div
+          class="overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div class="p-4 bg-green-100">
+            <p>Eintrag erfolgreich gespeichert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="errorModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+      <div
+        class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div
+          class="overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div class="p-4 bg-red-100">
+            <p id="errorMessage">Ein Fehler ist aufgetreten.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/adminpanel.js"></script>
+  </body>
+</html>
