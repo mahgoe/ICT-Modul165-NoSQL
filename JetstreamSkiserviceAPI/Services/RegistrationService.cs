@@ -101,7 +101,7 @@ namespace JetstreamSkiserviceAPI.Services
 
             if (statusId == null || priorityId == null || serviceId == null)
             {
-                throw new KeyNotFoundException("Einer der Werte für Status, Priority oder Service wurde nicht gefunden.");
+                throw new KeyNotFoundException("A value from Status, Priority or Service was not found.");
             }
 
             var registration = _mapper.Map<Registration>(registrationDto);
@@ -122,7 +122,7 @@ namespace JetstreamSkiserviceAPI.Services
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException">Referenced ID or Item not found or doesn't exist</exception>
         /// <exception cref="Exception">Thrown when an unexpected error occurs during the process</exception>
-        public async Task UpdateRegistration(RegistrationDto registrationDto)
+        public async Task UpdateRegistration(string id, CreateRegistrationDto registrationDto)
         {
             var status = await _status.Find(s => s.StatusName == registrationDto.Status).FirstOrDefaultAsync();
             if (status == null)
@@ -130,7 +130,7 @@ namespace JetstreamSkiserviceAPI.Services
                 throw new ArgumentException("The status was not found.");
             }
 
-            var priority = await _priorities.Find(s => s.PriorityName == registrationDto.Priority).FirstOrDefaultAsync();
+            var priority = await _priorities.Find(p => p.PriorityName == registrationDto.Priority).FirstOrDefaultAsync();
             if (priority == null)
             {
                 throw new ArgumentException("The priority was not found.");
@@ -142,8 +142,7 @@ namespace JetstreamSkiserviceAPI.Services
                 throw new ArgumentException("The service was not found.");
             }
 
-
-            var filter = Builders<Registration>.Filter.Eq(r => r.Id, registrationDto.Id);
+            // Erstelle ein UpdateDefinition-Objekt, das beschreibt, wie die Daten aktualisiert werden sollen.
             var update = Builders<Registration>.Update
                 .Set(r => r.FirstName, registrationDto.FirstName)
                 .Set(r => r.LastName, registrationDto.LastName)
@@ -154,11 +153,14 @@ namespace JetstreamSkiserviceAPI.Services
                 .Set(r => r.StatusId, status.Id)
                 .Set(r => r.PriorityId, priority.Id)
                 .Set(r => r.ServiceId, service.Id)
-                .Set(r => r.Price, Convert.ToDouble(registrationDto.Price))
+                .Set(r => r.Price, registrationDto.Price)
                 .Set(r => r.Comment, registrationDto.Comment);
 
-            await _registrations.FindOneAndUpdateAsync(filter, update);
+            // Finde das Dokument mit der angegebenen Id und führe das Update aus.
+            var filter = Builders<Registration>.Filter.Eq(r => r.Id, id);
+            await _registrations.UpdateOneAsync(filter, update);
         }
+
 
         public async Task DeleteRegistration(string id)
         {

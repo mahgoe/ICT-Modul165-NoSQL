@@ -32,7 +32,7 @@ namespace JetstreamSkiserviceAPI.Services
         /// </summary>
         /// <param name="registrationDto">The RegistrationDto object containing the updated registration details</param>
         /// <returns></returns>
-        Task UpdateRegistration(RegistrationDto registrationDto);
+        Task UpdateRegistration(string id, CreateRegistrationDto createRegistrationDto);
 
         /// <summary>
         /// Deletes a registration by its ID

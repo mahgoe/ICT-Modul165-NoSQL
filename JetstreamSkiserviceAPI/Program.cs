@@ -58,8 +58,6 @@ namespace JetstreamSkiserviceAPI
             var mongoDatabase = mongoClient.GetDatabase(databaseName);
             DatabaseHelper.Initialize(mongoDatabase);
 
-
-
             // Configure JWT Token
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

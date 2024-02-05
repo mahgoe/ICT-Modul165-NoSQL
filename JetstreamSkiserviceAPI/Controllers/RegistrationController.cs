@@ -115,33 +115,33 @@ namespace JetstreamSkiserviceAPI.Controllers
         /// <param name="registrationDto">The ID of the registration to update</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateRegistration(int id, RegistrationDto registrationDto)
+        public async Task<IActionResult> UpdateRegistration(string id, [FromBody] CreateRegistrationDto updateDto)
         {
-            if (registrationDto == null)
+            if (updateDto == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid request data");
             }
 
             try
             {
-                await _registrationService.UpdateRegistration(registrationDto);
-                return Ok(registrationDto);
+                await _registrationService.UpdateRegistration(id, updateDto);
+                return Ok();
             }
             catch (KeyNotFoundException ex)
             {
-                _logger.LogError($"An error occured, {ex.Message}");
-                return NotFound($"No Item found with ID {id}");
+                _logger.LogError($"An error occurred, {ex.Message}");
+                return NotFound($"No item found with ID {id}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occured, {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured");
+                _logger.LogError($"An error occurred, {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred");
             }
         }
 
