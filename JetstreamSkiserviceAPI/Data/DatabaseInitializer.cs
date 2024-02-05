@@ -27,7 +27,6 @@ namespace JetstreamSkiserviceAPI.Data
 
         public async Task SeedData()
         {
-            // Überprüfen Sie zuerst, ob Daten bereits vorhanden sind, um Duplikate zu vermeiden.
             if (!await _database.GetCollection<Priority>("priority").Find(_ => true).AnyAsync())
             {
                 var priorities = new List<Priority>
@@ -86,25 +85,59 @@ namespace JetstreamSkiserviceAPI.Data
 
             if (!registrationExists)
             {
-                // Beispiel: Ermitteln der IDs
+                // Prioritys
+                var priorityTiefId = await _database.GetCollection<Priority>("priority")
+                    .Find(p => p.PriorityName == "Tief")
+                    .Project(p => p.Id)
+                    .FirstOrDefaultAsync();
+
                 var priorityStandardId = await _database.GetCollection<Priority>("priority")
                     .Find(p => p.PriorityName == "Standard")
                     .Project(p => p.Id)
                     .FirstOrDefaultAsync();
 
+                var priorityExpressId = await _database.GetCollection<Priority>("priority")
+                    .Find(p => p.PriorityName == "Express")
+                    .Project(p => p.Id)
+                    .FirstOrDefaultAsync();
+
+                // Status
                 var statusOffenId = await _database.GetCollection<Status>("status")
                     .Find(s => s.StatusName == "Offen")
                     .Project(s => s.Id)
                     .FirstOrDefaultAsync();
 
+                var statusInArbeitId = await _database.GetCollection<Status>("status")
+                    .Find(s => s.StatusName == "InArbeit")
+                    .Project(s => s.Id)
+                    .FirstOrDefaultAsync();
+
+                var statusAbgeschlossenId = await _database.GetCollection<Status>("status")
+                    .Find(s => s.StatusName == "abgeschlossen")
+                    .Project(s => s.Id)
+                    .FirstOrDefaultAsync();
+
+                var statusStorniertId = await _database.GetCollection<Status>("status")
+                    .Find(s => s.StatusName == "storniert")
+                    .Project(s => s.Id)
+                    .FirstOrDefaultAsync();
+
+                // Service
                 var serviceKleinId = await _database.GetCollection<Service>("services")
                     .Find(s => s.ServiceName == "Kleiner Service")
                     .Project(s => s.Id)
                     .FirstOrDefaultAsync();
 
-                // Hier müssten Sie die entsprechenden Abfragen für Service und weitere machen
+                var serviceGrossId = await _database.GetCollection<Service>("services")
+                    .Find(s => s.ServiceName == "Grosser Service")
+                    .Project(s => s.Id)
+                    .FirstOrDefaultAsync();
 
-                // Einfügen der Registration-Daten mit den ermittelten IDs
+                var serviceRennId = await _database.GetCollection<Service>("services")
+                    .Find(s => s.ServiceName == "Rennski Service")
+                    .Project(s => s.Id)
+                    .FirstOrDefaultAsync();
+
                 var registrations = new List<Registration>
             {
                 new Registration
@@ -118,9 +151,51 @@ namespace JetstreamSkiserviceAPI.Data
                     PriorityId = priorityStandardId,
                     StatusId = statusOffenId,
                     ServiceId = serviceKleinId,
-                    Price = "199",
+                    Price = 188,
                     Comment = "Testkommentar"
                 },
+                new Registration
+                {
+                    FirstName = "Tim",
+                    LastName = "Musterfrau",
+                    Email = "tim@musterfrau.com",
+                    Phone = "0791234564",
+                    CreateDate = DateTime.UtcNow,
+                    PickupDate = DateTime.UtcNow.AddDays(4),
+                    PriorityId = priorityTiefId,
+                    StatusId = statusInArbeitId,
+                    ServiceId = serviceGrossId,
+                    Price = 200,
+                    Comment = "Testkommentar"
+                },
+                new Registration
+                {
+                    FirstName = "Jenny",
+                    LastName = "Klein",
+                    Email = "jenny@gmail.com",
+                    Phone = "0791334534",
+                    CreateDate = DateTime.UtcNow,
+                    PickupDate = DateTime.UtcNow.AddDays(5),
+                    PriorityId = priorityExpressId,
+                    StatusId = statusAbgeschlossenId,
+                    ServiceId = serviceRennId,
+                    Price = 203,
+                    Comment = "Testkommentar"
+                },
+                new Registration
+                {
+                    FirstName = "Chris",
+                    LastName = "Gross",
+                    Email = "c.gross@gmx.com",
+                    Phone = "079133341",
+                    CreateDate = DateTime.UtcNow,
+                    PickupDate = DateTime.UtcNow.AddDays(1),
+                    PriorityId = priorityExpressId,
+                    StatusId = statusStorniertId,
+                    ServiceId = serviceRennId,
+                    Price = 345,
+                    Comment = "Testkommentar"
+                }
             };
 
                 await _database.GetCollection<Registration>("registrations").InsertManyAsync(registrations);

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace JetstreamSkiserviceAPI.Models
 {
@@ -10,6 +11,7 @@ namespace JetstreamSkiserviceAPI.Models
         /// </summary>
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [JsonIgnore]
         public string Id { get; set; }
 
         [BsonElement("firstname")]
@@ -41,7 +43,7 @@ namespace JetstreamSkiserviceAPI.Models
         public string ServiceId { get; set; }
 
         [BsonElement("price")]
-        public string Price { get; set; }
+        public double Price { get; set; }
 
         [BsonElement("comment")]
         public string Comment { get; set; }

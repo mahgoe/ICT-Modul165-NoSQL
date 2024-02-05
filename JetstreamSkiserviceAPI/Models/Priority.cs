@@ -11,8 +11,5 @@ namespace JetstreamSkiserviceAPI.Models
 
         [BsonElement("priorityname")]
         public string PriorityName { get; set; }
-
-        [BsonElement("registration_id")]
-        public List<string> RegistrationId { get; set; }
     }
 }

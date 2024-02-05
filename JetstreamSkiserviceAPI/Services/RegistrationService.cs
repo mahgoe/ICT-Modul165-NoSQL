@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JetstreamSkiserviceAPI.Data;
 using JetstreamSkiserviceAPI.DTO;
 using JetstreamSkiserviceAPI.Models;
 using MongoDB.Driver;
@@ -40,7 +41,6 @@ namespace JetstreamSkiserviceAPI.Services
         {
             var registrations = await _registrations.Find(reg => true).ToListAsync();
 
-            // Dieser Schritt ist notwendig, um die Referenzen manuell aufzulösen
             var registrationDtos = registrations.Select(async reg =>
             {
                 var status = await _status.Find(s => s.Id == reg.StatusId).FirstOrDefaultAsync();
@@ -55,7 +55,6 @@ namespace JetstreamSkiserviceAPI.Services
                 return regDto;
             }).ToList();
 
-            // Da die obige Selektion asynchrone Operationen enthält, müssen Sie auf die Ergebnisse warten
             return await Task.WhenAll(registrationDtos);
         }
 
@@ -75,7 +74,6 @@ namespace JetstreamSkiserviceAPI.Services
                 throw new KeyNotFoundException("Referenced ID or Item not found or doesn't exist");
             }
 
-            // Manuelles Auflösen der Referenzen wie oben
             var status = await _status.Find(s => s.Id == registration.StatusId).FirstOrDefaultAsync();
             var priority = await _priorities.Find(p => p.Id == registration.PriorityId).FirstOrDefaultAsync();
             var service = await _services.Find(serv => serv.Id == registration.ServiceId).FirstOrDefaultAsync();
@@ -95,24 +93,26 @@ namespace JetstreamSkiserviceAPI.Services
         /// <param name="registrationDto">The RegistrationDto object containing the registration details</param>
         /// <returns></returns>
         /// <exception cref="Exception">Thrown when an unexpected error occurs during the process</exception>
-        public async Task<RegistrationDto> AddRegistration(RegistrationDto registrationDto)
+        public async Task<RegistrationDto> AddRegistration(CreateRegistrationDto registrationDto)
         {
+            var statusId = await DatabaseHelper.GetStatusIdByNameAsync(registrationDto.Status);
+            var priorityId = await DatabaseHelper.GetPriorityIdByNameAsync(registrationDto.Priority);
+            var serviceId = await DatabaseHelper.GetServiceIdByNameAsync(registrationDto.Service);
+
+            if (statusId == null || priorityId == null || serviceId == null)
+            {
+                throw new KeyNotFoundException("Einer der Werte für Status, Priority oder Service wurde nicht gefunden.");
+            }
+
             var registration = _mapper.Map<Registration>(registrationDto);
-
-            // Find Status ID by Name
-            var status = await _status.Find(s => s.StatusName == registrationDto.Status).FirstOrDefaultAsync();
-            registration.StatusId = status?.Id; // Beachten Sie, dass StatusId jetzt ein String ist, da MongoDB ObjectIds verwendet.
-
-            // Find Priority ID by Name
-            var priority = await _priorities.Find(p => p.PriorityName == registrationDto.Priority).FirstOrDefaultAsync();
-            registration.PriorityId = priority?.Id;
-
-            // Find Service ID by Name
-            var service = await _services.Find(s => s.ServiceName == registrationDto.Service).FirstOrDefaultAsync();
-            registration.ServiceId = service?.Id;
+            registration.StatusId = statusId;
+            registration.PriorityId = priorityId;
+            registration.ServiceId = serviceId;
 
             await _registrations.InsertOneAsync(registration);
-            return _mapper.Map<RegistrationDto>(registration);
+
+            var resultDto = _mapper.Map<RegistrationDto>(registration);
+            return resultDto;
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace JetstreamSkiserviceAPI.Services
                 .Set(r => r.StatusId, status.Id)
                 .Set(r => r.PriorityId, priority.Id)
                 .Set(r => r.ServiceId, service.Id)
-                .Set(r => r.Price, registrationDto.Price)
+                .Set(r => r.Price, Convert.ToDouble(registrationDto.Price))
                 .Set(r => r.Comment, registrationDto.Comment);
 
             await _registrations.FindOneAndUpdateAsync(filter, update);

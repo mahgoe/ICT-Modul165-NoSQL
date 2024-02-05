@@ -10,14 +10,14 @@
   <Class Name="JetstreamSkiserviceAPI.DTO.EmployeeDto">
     <Position X="3.75" Y="1" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAECAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAECAAE=</HashCode>
       <FileName>DTO\EmployeeDto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="JetstreamSkiserviceAPI.DTO.RegistrationDto">
     <Position X="5.5" Y="3" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAEASAAAIAEAAAAAAAAQAAAQAAAAAAAIAAACAg=</HashCode>
+      <HashCode>AAACAEAEASAAAAAEAAAAAAAAQAAAQAAAAAAAIAAACAg=</HashCode>
       <FileName>DTO\RegistrationDto.cs</FileName>
     </TypeIdentifier>
   </Class>

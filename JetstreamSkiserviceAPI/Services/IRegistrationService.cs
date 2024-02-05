@@ -25,7 +25,7 @@ namespace JetstreamSkiserviceAPI.Services
         /// </summary>
         /// <param name="registrationDto">The RegistrationDto object containing the registration details to be added</param>
         /// <returns></returns>
-        Task<RegistrationDto> AddRegistration(RegistrationDto registrationDto);
+        Task<RegistrationDto> AddRegistration(CreateRegistrationDto createRegistrationDto);
 
         /// <summary>
         /// Updates an existing registration

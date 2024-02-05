@@ -92,12 +92,13 @@ namespace JetstreamSkiserviceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<RegistrationDto>> CreateRegistration(RegistrationDto registrationDto)
+        [HttpPost]
+        public async Task<ActionResult<RegistrationDto>> CreateRegistration([FromBody] CreateRegistrationDto createRegistrationDto)
         {
             try
             {
-                var createRegistrationDto = await _registrationService.AddRegistration(registrationDto);
-                return CreatedAtAction(nameof(CreateRegistration), new { id = registrationDto.Id }, createRegistrationDto);
+                var registrationDto = await _registrationService.AddRegistration(createRegistrationDto);
+                return CreatedAtAction(nameof(GetRegistration), new { id = registrationDto.Id }, registrationDto);
             }
             catch (Exception ex)
             {
@@ -105,6 +106,7 @@ namespace JetstreamSkiserviceAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred");
             }
         }
+
 
         /// <summary>
         /// Updates an existing registration by ID

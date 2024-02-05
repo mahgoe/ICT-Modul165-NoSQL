@@ -1,12 +1,11 @@
-using JetstreamSkiserviceAPI.Models;
 using JetstreamSkiserviceAPI.Data;
 using JetstreamSkiserviceAPI.Services;
+using JetstreamSkiserviceAPI.Mappers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
-using JetstreamSkiserviceAPI.Mappers;
 using MongoDB.Driver;
 
 namespace JetstreamSkiserviceAPI
@@ -54,9 +53,10 @@ namespace JetstreamSkiserviceAPI
             // Add Scopes from the implemented interfaces
             builder.Services.AddSingleton<DatabaseInitializer>();
             builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-            builder.Services.AddScoped<IStatusService, StatusService>();
-            builder.Services.AddScoped<IPriorityService, PriorityService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
+
+            var mongoDatabase = mongoClient.GetDatabase(databaseName);
+            DatabaseHelper.Initialize(mongoDatabase);
 
 
 

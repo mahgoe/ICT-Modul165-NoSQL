@@ -12,6 +12,9 @@ namespace JetstreamSkiserviceAPI.Mappers
             CreateMap<Registration, RegistrationDto>();
             CreateMap<RegistrationDto, Registration>();
 
+            CreateMap<Registration, RegistrationDto>().ReverseMap();
+            CreateMap<CreateRegistrationDto, Registration>().ReverseMap();
+
             CreateMap<Priority, PriorityDto>();
             CreateMap<PriorityDto, Priority>();
 
