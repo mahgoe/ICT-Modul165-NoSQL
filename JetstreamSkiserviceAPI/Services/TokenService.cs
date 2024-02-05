@@ -21,7 +21,7 @@ namespace JetstreamSkiserviceAPI.Services
 
         public TokenService(IMongoDatabase database, IConfiguration configuration)
         {
-            _employeesCollection = database.GetCollection<Employee>("Employees");
+            _employeesCollection = database.GetCollection<Employee>("employees");
             _configuration = configuration;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         }
@@ -58,12 +58,11 @@ namespace JetstreamSkiserviceAPI.Services
         public async Task<List<EmployeeDto>> GetEmployees()
         {
             var employees = await _employeesCollection.Find(_ => true).ToListAsync();
-            // Konvertierung von Employee zu EmployeeDto
             return employees.Select(emp => new EmployeeDto
             {
                 EmployeeId = emp.Id,
                 Username = emp.Username,
-                Password = emp.Password, // Beachten Sie die Sicherheitsrisiken bei der Rückgabe von Passwörtern
+                Password = emp.Password,
                 Attempts = emp.Attempts
             }).ToList();
         }
@@ -80,4 +79,4 @@ namespace JetstreamSkiserviceAPI.Services
             await _employeesCollection.UpdateOneAsync(e => e.Id == employeeId, update);
         }
     }
-    }
+}

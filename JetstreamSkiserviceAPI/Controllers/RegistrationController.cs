@@ -115,7 +115,7 @@ namespace JetstreamSkiserviceAPI.Controllers
         /// <param name="registrationDto">The ID of the registration to update</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        //[Authorize]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
