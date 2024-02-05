@@ -1,6 +1,7 @@
 DbAdmin = db.getSiblingDB("admin");
 BackendAccess = db.getSiblingDB("JetstreamDB");
 
+// Admin Access
 if (!adminDatabase.getUser("admin")) {
   adminDatabase.createUser({
     user: "admin",
@@ -9,6 +10,16 @@ if (!adminDatabase.getUser("admin")) {
   });
 }
 
+// Second User Access
+if (!BackendAccess.getUser("Lukas")) {
+  BackendAccess.createUser({
+    user: "Lukas",
+    pwd: "password",
+    roles: ["customRole"],
+  });
+}
+
+// WebAPI
 if (!BackendAccess.getRole("customRole")) {
   BackendAccess.createRole({
     role: "customRole",
@@ -19,13 +30,5 @@ if (!BackendAccess.getRole("customRole")) {
       },
     ],
     roles: [],
-  });
-}
-
-if (!BackendAccess.getUser("Lukas")) {
-  BackendAccess.createUser({
-    user: "Lukas",
-    pwd: "password",
-    roles: ["customRole"],
   });
 }
