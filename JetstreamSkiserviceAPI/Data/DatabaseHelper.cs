@@ -18,14 +18,9 @@ namespace JetstreamSkiserviceAPI.Data
 
         public static async Task<string> GetStatusIdByNameAsync(string statusName)
         {
-            if (_statusCollection == null)
-            {
-                throw new InvalidOperationException("Status collection has not been initialized.");
-            }
             var status = await _statusCollection.Find(s => s.StatusName == statusName).FirstOrDefaultAsync();
             return status?.Id;
         }
-
 
         public static async Task<string> GetPriorityIdByNameAsync(string priorityName)
         {

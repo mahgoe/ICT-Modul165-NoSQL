@@ -1,0 +1,8 @@
+[
+  { "ServiceId": 1, "ServiceName": "Kleiner Service" },
+  { "ServiceId": 2, "ServiceName": "Grosser Service" },
+  { "ServiceId": 3, "ServiceName": "Rennski Service" },
+  { "ServiceId": 4, "ServiceName": "Bindungen montieren und einstellen" },
+  { "ServiceId": 5, "ServiceName": "Fell zuschneiden" },
+  { "ServiceId": 6, "ServiceName": "Heisswachsen" }
+]

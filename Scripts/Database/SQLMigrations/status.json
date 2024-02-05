@@ -1,0 +1,6 @@
+[
+  { "StatusId": 1, "StatusName": "Offen" },
+  { "StatusId": 2, "StatusName": "InArbeit" },
+  { "StatusId": 3, "StatusName": "abgeschlossen" },
+  { "StatusId": 4, "StatusName": "storniert" }
+]

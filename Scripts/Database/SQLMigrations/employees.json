@@ -1,0 +1,68 @@
+[
+  {
+    "EmployeeId": 1,
+    "Username": "admin",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 2,
+    "Username": "employee1",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 3,
+    "Username": "employee2",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 4,
+    "Username": "employee3",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 5,
+    "Username": "employee4",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 6,
+    "Username": "employee5",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 7,
+    "Username": "employee6",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 8,
+    "Username": "employee7",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 9,
+    "Username": "employee8",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 10,
+    "Username": "employee9",
+    "Password": "password",
+    "Attempts": 0
+  },
+  {
+    "EmployeeId": 11,
+    "Username": "employee10",
+    "Password": "password",
+    "Attempts": 0
+  }
+]
