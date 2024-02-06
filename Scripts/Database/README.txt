@@ -1,0 +1,1 @@
+Please change all paths to get worked with the scripts. The most paths are examples.

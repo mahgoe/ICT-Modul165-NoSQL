@@ -113,7 +113,7 @@ function validateEmailFormat(field) {
 
 function validatePhoneNumber(field) {
   const phonePattern =
-    /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b/;
+      /(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})/g;
   if (!phonePattern.test(field.value)) {
     return false;
   }

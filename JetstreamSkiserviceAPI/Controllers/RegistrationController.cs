@@ -92,7 +92,6 @@ namespace JetstreamSkiserviceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost]
         public async Task<ActionResult<RegistrationDto>> CreateRegistration([FromBody] CreateRegistrationDto createRegistrationDto)
         {
             try

@@ -11,8 +11,6 @@
 
         public string Password { get; set; }
 
-        public string GroupName { get; set; }
-
         public int Attempts { get; set; }
     }
 }

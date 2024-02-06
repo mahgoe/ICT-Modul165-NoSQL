@@ -1,31 +1,55 @@
-# Path to your mongodump.exe. Change this according to your installation.
-# Delete Comment if you want to use the full path to mongodump
-# $MongodumpPath = "C:\Program Files\MongoDB\Server\7.0\bin\mongodump.exe"
+#region Variables
 
-# Directory where the backup will be saved.
-$BackupDir = "../Backups"
+# MongoDB access variables
+$dbName = "JetstreamDB"
+# $username = ""
+# $password = ""
+# $authenticationDatabase = ""
+$mHost = "localhost"
+$port = "27017"
+
+# Folders location and name
+$backupPath = "C:\Path\To\Save\Backups"
+$currentDate = get-date -format yyyyMMddHHmm
+$directoryName = "$dbName-$currentDate"
+$directoryPath = Join-Path $backupPath $directoryName
+
+#endregion
+
+$watch = New-Object System.Diagnostics.StopWatch
+$watch.Start()
+Write-Host "Backup the Database: '$dbName' on local directory: $backupPath."
+
+#region Backup Process (Authorization)
+# If you need the database authorization use the command below
+<# 
+mongodump -h "$mHost" `
+   -d "$dbName" `
+   -u "$username" `
+   -p "$password" `
+   --authenticationDatabase "$authenticationDatabase" `
+   -o "$directoryPath"
+#>
+# Or this command if mongodump is not in the System PATH
+<# 
+C:\Path\To\Tools\mongodump.exe -h "$mHost" `
+   -d "$dbName" `
+   -u "$username" `
+   -p "$password" `
+   --authenticationDatabase "$authenticationDatabase" `
+   -o "$directoryPath"
+#>
 
 
-# Create a timestamp to be used for the backup file name
-$TimeStamp = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
+#endregion
 
-# Create a directory with the timestamp to store the backup
-$BackupDBDir = Join-Path -Path $BackupDir -ChildPath ($TimeStamp + "_JetstreamDB")
-New-Item -ItemType Directory -Path $BackupDBDir -Force | Out-Null
+# Backup Process (Without autorization)
+mongodump --host $mHost --port $port --db $dbName -o "$directoryPath"
 
-# Host and Port to your MongoDB server. Change this according to your MongoDB Server Configuration.
-$MongoHost = "localhost"
-$Port = "27017"
+# DISCLAIMER: Use the absolute path if mongodump is not in the System PATH
+# C:\Path\To\Tools\mongodump.exe --host $mHost --port $port --db $databaseName -o "$directoryPath"
 
-# Database Name
-$DbName = "JetstreamDB"
+Write-Host "Creating the backup for $dbName..."
 
-# Start the backup process
-# DISCLAIMER: Comment out the line you don't want to use. Default is 2. commented out.
-# 1. Direct mongodump if mongodump is in the Windows PATH
-mongodump --host $MongoHost --port $Port --db $DbName --out $BackupDBDir
-# 2. Use the full path to mongodump
-# & $MongodumpPath --host $MongoHost --port $Port --db $DbName --out $BackupDir
-
-# Check if the backup process was successful
-Write-Host "Backup for the database '$DbName' was successful created on the directory '$BackupDir'."
+$watch.Stop();
+Write-Host "MongoDB backup completed in "$watch.Elapsed.ToString()

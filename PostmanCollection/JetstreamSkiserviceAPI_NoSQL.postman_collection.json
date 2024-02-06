@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "6ffbae5b-e900-43fd-8306-2bdbb2333c11",
+		"name": "JetstreamSkiserviceAPI_NoSQL",
+		"description": "This Postman Collection is for the Jetstream Skiservice API Project that is connected to MongoDB.\n\nIt contains basic Postman Tests that can be runned for each Endpoint or for the whole Collection.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29155744"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Employees/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields - username and token\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.property('username');\r",
+									"    pm.expect(responseData).to.have.property('token');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Username is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should be a non-empty string\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7119/Employees/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Employees",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Employees/unban/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcwNzIxNjc0MCwiZXhwIjoxNzA3MzAzMTQwLCJpYXQiOjE3MDcyMTY3NDB9.JLffH5EaRcHkRfZZ27dyCcCYP5qRJaVAy6PFL-7XYm_6lJVaGF4T224AWbMygiG9Wfd0MeJSeL_srK01uKYWDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7119/Employees/unban/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Employees",
+								"unban",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is a Postman Collection to run all implementet HTTP Requests for the Login Route."
+		},
+		{
+			"name": "Registrations",
+			"item": [
+				{
+					"name": "Registrations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(item => {\r",
+									"        pm.expect(item).to.include.all.keys('id', 'firstName', 'lastName', 'email', 'phone', 'create_date', 'pickup_date', 'status', 'priority', 'service', 'price', 'comment');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Price is a non-negative integer\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  responseData.forEach(function(registration) {\r",
+									"    pm.expect(registration.price).to.be.a('number').and.to.satisfy((price) => price >= 0, \"Price must be a non-negative integer\");\r",
+									"  });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7119/Registrations",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Registrations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrations/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Email is in a valid format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.email).to.match(/\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/, \"Email format is invalid\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Phone number is in a valid format\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.phone).to.match(/(?:([+]\\d{1,4})[-.\\s]?)?(?:[(](\\d{1,3})[)][-.\\s]?)?(\\d{1,4})[-.\\s]?(\\d{1,4})[-.\\s]?(\\d{1,9})/g);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Phone number is in a valid format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.phone).to.match(/^\\d{10}$/);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7119/Registrations/65c0eb493912010b6079e08d",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Registrations",
+								"65c0eb493912010b6079e08d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Email is in a valid format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.email).to.match(/^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)*(\\.[a-z]{2,})$/, \"Email should be in a valid format\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Phone number is in a valid format\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.phone).to.match(/(?:([+]\\d{1,4})[-.\\s]?)?(?:[(](\\d{1,3})[)][-.\\s]?)?(\\d{1,4})[-.\\s]?(\\d{1,4})[-.\\s]?(\\d{1,9})/g);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status and priority fields are null or have specific values\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.status).to.be.oneOf([null, \"specificValue1\", \"specificValue2\"]);\r",
+									"    pm.expect(responseData.priority).to.be.oneOf([null, \"specificValue3\", \"specificValue4\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Postman\",\r\n  \"lastName\": \"Kingkong\",\r\n  \"email\": \"info@postman.com\",\r\n  \"phone\": \"+418888888\",\r\n  \"create_date\": \"2024-02-06T10:40:18.083Z\",\r\n  \"pickup_date\": \"2024-02-06T10:40:18.083Z\",\r\n  \"status\": \"abgeschlossen\",\r\n  \"priority\": \"Express\",\r\n  \"service\": \"Rennski Service\",\r\n  \"price\": 99,\r\n  \"comment\": \"This is a POST generated by Postman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7119/Registrations",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Registrations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrations/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcwNzIxNjc0MCwiZXhwIjoxNzA3MzAzMTQwLCJpYXQiOjE3MDcyMTY3NDB9.JLffH5EaRcHkRfZZ27dyCcCYP5qRJaVAy6PFL-7XYm_6lJVaGF4T224AWbMygiG9Wfd0MeJSeL_srK01uKYWDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Postman\",\r\n  \"lastName\": \"Kingkong\",\r\n  \"email\": \"info@postman.com\",\r\n  \"phone\": \"+418888888\",\r\n  \"create_date\": \"2024-02-06T10:40:18.083Z\",\r\n  \"pickup_date\": \"2024-02-06T10:40:18.083Z\",\r\n  \"status\": \"abgeschlossen\",\r\n  \"priority\": \"Express\",\r\n  \"service\": \"Rennski Service\",\r\n  \"price\": 99,\r\n  \"comment\": \"This is a PUT Change generated by Postman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7119/Registrations/65c20ce76122e78db773221f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Registrations",
+								"65c20ce76122e78db773221f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcwNzIxNjc0MCwiZXhwIjoxNzA3MzAzMTQwLCJpYXQiOjE3MDcyMTY3NDB9.JLffH5EaRcHkRfZZ27dyCcCYP5qRJaVAy6PFL-7XYm_6lJVaGF4T224AWbMygiG9Wfd0MeJSeL_srK01uKYWDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7119/Registrations/65c20ce76122e78db773221f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7119",
+							"path": [
+								"Registrations",
+								"65c20ce76122e78db773221f"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This is a Postman Collection to run all implementet HTTP Requests for the Registrations Route."
+		}
+	]
+}
