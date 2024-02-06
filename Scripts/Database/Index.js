@@ -4,7 +4,6 @@ db = db.getSiblingDB("JetstreamDB");
 // Index for registrations
 db.registrations.createIndex({ firstname: 1 }, { name: "firstname_index" });
 db.registrations.createIndex({ lastname: 1 }, { name: "lastname_index" });
-db.registrations.createIndex({ email: 1 }, { name: "email_index" });
 db.registrations.createIndex({ pickup_date: 1 }, { name: "pickupdate_index" });
 
 // Index for services

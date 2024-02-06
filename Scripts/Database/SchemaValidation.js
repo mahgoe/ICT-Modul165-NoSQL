@@ -9,7 +9,7 @@ db.createCollection("registrations", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["firstName", "lastName", "email"],
+      required: ["firstname", "lastname", "email"],
       properties: {
         firstname: {
           bsonType: "string",
@@ -21,14 +21,14 @@ db.createCollection("registrations", {
         },
         email: {
           bsonType: "string",
-          pattern: "/^((?!.)[w-_.]*[^.])(@w+)(.w+(.w+)?[^.W])$/gm",
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
           description: "must be a string and is required",
         },
         phone: {
           bsonType: "string",
           pattern:
-            "/(?:([+]d{1,4})[-.s]?)?(?:[(](d{1,3})[)][-.s]?)?(d{1,4})[-.s]?(d{1,4})[-.s]?(d{1,9})/g",
-          description: "must be a string",
+            "^\\+?(\\d{1,4})?([- .])?((\\(\\d{1,3}\\))|\\d{1,3})?([- .])?\\d{1,4}([- .])?\\d{1,4}([- .])?\\d{1,9}$",
+          description: "must be a valid phone number",
         },
         createdate: {
           bsonType: "date",
@@ -108,6 +108,7 @@ db.createCollection("services", {
             "Grosser Service",
             "Rennski Service",
             "Bindungen montieren und einstellen",
+            "Fell zuschneiden",
             "Heisswachsen",
           ],
           description: "can only be one of the enum values",

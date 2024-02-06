@@ -10,10 +10,10 @@ namespace JetstreamSkiserviceAPI.DTO
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
-        [RegularExpression(@"/^((?!.)[w-_.]*[^.])(@w+)(.w+(.w+)?[^.W])$/gm", ErrorMessage = "Invalid E-Mail format.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid E-Mail format.")]
         public string Email { get; set; }
 
-        [RegularExpression(@"/(?:([+]d{1,4})[-.s]?)?(?:[(](d{1,3})[)][-.s]?)?(d{1,4})[-.s]?(d{1,4})[-.s]?(d{1,9})/g", ErrorMessage = "Invalid phone number format.")]
+        [RegularExpression(@"^\+?(\d{1,4})?([- .])?((\(\d{1,3}\))|\d{1,3})?([- .])?\d{1,4}([- .])?\d{1,4}([- .])?\d{1,9}$", ErrorMessage = "Invalid phone number format.")]
         public string Phone { get; set; }
 
         public DateTime Create_date { get; set; }

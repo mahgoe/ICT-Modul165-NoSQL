@@ -34,12 +34,15 @@ namespace JetstreamSkiserviceAPI.Models
 
         // References to other Documents
         [BsonElement("status_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string StatusId { get; set; }
 
         [BsonElement("priority_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string PriorityId { get; set; }
 
         [BsonElement("service_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string ServiceId { get; set; }
 
         [BsonElement("price")]

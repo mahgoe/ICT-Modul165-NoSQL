@@ -90,13 +90,12 @@ namespace JetstreamSkiserviceAPI.Data
         public async Task InsertRegistrationDataAsync()
         {
             var registrationExists = await _database.GetCollection<Registration>("registrations")
-            .Find(_ => true)
-            .AnyAsync();
-
+                .Find(_ => true)
+                .AnyAsync();
 
             if (!registrationExists)
             {
-                // Prioritys
+                // Priorities
                 var priorityTiefId = await _database.GetCollection<Priority>("priority")
                     .Find(p => p.PriorityName == "Tief")
                     .Project(p => p.Id)

@@ -3,9 +3,6 @@ using JetstreamSkiserviceAPI.Data;
 using JetstreamSkiserviceAPI.DTO;
 using JetstreamSkiserviceAPI.Models;
 using MongoDB.Driver;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JetstreamSkiserviceAPI.Services
 {
