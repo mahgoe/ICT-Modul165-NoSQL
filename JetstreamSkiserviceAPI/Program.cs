@@ -117,6 +117,7 @@ namespace JetstreamSkiserviceAPI
             builder.Services.AddAuthorization();
             builder.Services.AddControllers();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

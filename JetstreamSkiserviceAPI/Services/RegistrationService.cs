@@ -71,6 +71,12 @@ namespace JetstreamSkiserviceAPI.Services
                 throw new KeyNotFoundException("Referenced ID or Item not found or doesn't exist");
             }
 
+            if (registration != null)
+            {
+                registration.CreateDate = DateTimeHelper.ConvertFromIsoDate(registration.CreateDate.ToString());
+                registration.PickupDate = DateTimeHelper.ConvertFromIsoDate(registration.PickupDate.ToString());
+            }
+
             var status = await _status.Find(s => s.Id == registration.StatusId).FirstOrDefaultAsync();
             var priority = await _priorities.Find(p => p.Id == registration.PriorityId).FirstOrDefaultAsync();
             var service = await _services.Find(serv => serv.Id == registration.ServiceId).FirstOrDefaultAsync();
@@ -95,6 +101,9 @@ namespace JetstreamSkiserviceAPI.Services
             var statusId = await DatabaseHelper.GetStatusIdByNameAsync(registrationDto.Status);
             var priorityId = await DatabaseHelper.GetPriorityIdByNameAsync(registrationDto.Priority);
             var serviceId = await DatabaseHelper.GetServiceIdByNameAsync(registrationDto.Service);
+            var createDateUtc = registrationDto.Create_date.ToUniversalTime();
+            var pickupDateUtc = registrationDto.Pickup_date.ToUniversalTime();
+
 
             if (statusId == null || priorityId == null || serviceId == null)
             {
@@ -105,6 +114,8 @@ namespace JetstreamSkiserviceAPI.Services
             registration.StatusId = statusId;
             registration.PriorityId = priorityId;
             registration.ServiceId = serviceId;
+            registration.CreateDate = createDateUtc;
+            registration.PickupDate = pickupDateUtc;
 
             await _registrations.InsertOneAsync(registration);
 
@@ -139,14 +150,17 @@ namespace JetstreamSkiserviceAPI.Services
                 throw new ArgumentException("The service was not found.");
             }
 
+            var createDateUtc = registrationDto.Create_date.ToUniversalTime();
+            var pickupDateUtc = registrationDto.Pickup_date.ToUniversalTime();
+
             // Erstelle ein UpdateDefinition-Objekt, das beschreibt, wie die Daten aktualisiert werden sollen.
             var update = Builders<Registration>.Update
                 .Set(r => r.FirstName, registrationDto.FirstName)
                 .Set(r => r.LastName, registrationDto.LastName)
                 .Set(r => r.Email, registrationDto.Email)
                 .Set(r => r.Phone, registrationDto.Phone)
-                .Set(r => r.CreateDate, registrationDto.Create_date)
-                .Set(r => r.PickupDate, registrationDto.Pickup_date)
+                .Set(r => r.CreateDate, createDateUtc)
+                .Set(r => r.PickupDate, pickupDateUtc)
                 .Set(r => r.StatusId, status.Id)
                 .Set(r => r.PriorityId, priority.Id)
                 .Set(r => r.ServiceId, service.Id)

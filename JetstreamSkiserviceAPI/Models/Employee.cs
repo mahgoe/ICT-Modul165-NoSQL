@@ -27,9 +27,6 @@ namespace JetstreamSkiserviceAPI.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-        [BsonElement("groupname")]
-        public string GroupName { get; set; }
-
         /// <summary>
         /// Attempts the employee needed - account gets banned after 3 false login attempts
         /// </summary>
